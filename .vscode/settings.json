@@ -35,5 +35,6 @@
         },
         "javascript.updateImportsOnFileMove.enabled": "always",
         "files.autoSave": "afterDelay",
-        "window.zoomLevel": -1
+        "window.zoomLevel": -1,
+        "editor.mouseWheelZoom": true
 }
