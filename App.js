@@ -8,10 +8,47 @@ function App() {
     done: false
   })
   const [data, setData] = useState([])
+  const [updateBtn, setUpdateBtn] = useState(false)
   const submitH = () => {
-    console.warn(input);
     let arr = [...data, input]
+    let arr2 = arr.map((todo, i) => {
+      let myTodo = {
+        ...todo,
+        id: i + 1
+      }
+      return myTodo
+    })
+    setData(arr2)
+    console.warn(data);
+  }
+  const deleteH = (e) => {
+    let arr = []
+    data.forEach((todo) => {
+      if (todo.id !== e.id) {
+        arr.push(todo)
+      }
+    })
     setData(arr)
+  }
+  const updateH = (e) => {
+    setInput({
+      ...input,
+      value: e.value
+    })
+        let arr = []
+    data.forEach((todo) => {
+      if (todo.id !== e.id) {
+        arr.push(todo)
+      }
+    })
+    setData(arr)
+    setUpdateBtn(true)
+  }
+
+  const updateTodoH = () => {
+    setUpdateBtn(false)
+    submitH()
+
   }
   return (
     <ScrollView>
@@ -20,11 +57,14 @@ function App() {
         <Text style={{ textAlign: 'center' }}>By Ameen_Ansari</Text>
       </View>
       <View style={{ marginTop: 42, alignItems: 'center' }}>
-        <TextInput value={input} onChangeText={(text) => setInput({
+        <TextInput value={input.value} onChangeText={(text) => setInput({
           ...input,
           value: text
         })} style={styles.input} placeholder='Enter Your Todo...' />
-        <Text onPress={submitH} style={styles.addbtn}>Add Todo</Text>
+        {
+          updateBtn ? <Text onPress={updateTodoH} style={styles.addbtn}>Update Todo</Text> : <Text onPress={submitH} style={styles.addbtn}>Add Todo</Text>
+        }
+        {/* <Text onPress={submitH} style={styles.addbtn}>Add Todo</Text> */}
       </View>
       <ScrollView >
         <TouchableOpacity style={styles.itemsP}>
@@ -35,8 +75,8 @@ function App() {
                   <Text key={i} style={styles.items}>{todo.value}
                   </Text>
                   <TouchableOpacity style={styles.items2}>
-                    <Text style={styles.delete}>del</Text>
-                    <Text style={styles.update}>update</Text>
+                    <Text style={styles.delete} onPress={() => deleteH(todo)}>del</Text>
+                    <Text style={styles.update} onPress={() => updateH(todo)}>update</Text>
                   </TouchableOpacity>
                 </View>
               )
@@ -82,17 +122,17 @@ let styles = StyleSheet.create({
     color: 'black',
     fontWeight: 600,
     fontSize: 18,
-    alignItems:"center",
-    gap:2
+    alignItems: "center",
+    gap: 2
   },
-  delete:{
-    flex:1,
+  delete: {
+    flex: 1,
     color: 'black',
     fontWeight: 600,
     fontSize: 18
   }
-  ,update:{
-    flex:1,
+  , update: {
+    flex: 1,
     color: 'black',
     fontWeight: 600,
     fontSize: 18
