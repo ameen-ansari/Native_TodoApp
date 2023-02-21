@@ -34,7 +34,7 @@
             "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "javascript.updateImportsOnFileMove.enabled": "always",
-        "files.autoSave": "afterDelay",
+        "files.autoSave": "off",
         "window.zoomLevel": -1,
         "editor.mouseWheelZoom": true
 }
